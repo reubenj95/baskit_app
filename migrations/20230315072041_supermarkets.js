@@ -3,14 +3,12 @@
  * @returns { Promise<void> }
  */
 exports.up = function (knex) {
-  return knex.schema.createTable('pantry_items', (table) => {
+  return knex.schema.createTable('supermarkets', (table) => {
     table.increments('id').primary,
-      table.integer('quantity'),
-      table.varchar('name'),
-      table.integer('category'),
-      table.integer('brand'),
-      table.varchar('image'),
-      table.date('best_before'),
+      table.text('name'),
+      table.decimal('lattitude', 8, 6),
+      table.decimal('longitude', 9, 6),
+      table.datetime('last_shopped'),
       table.boolean('is_fav'),
       table.integer('created_by')
   })
@@ -21,5 +19,5 @@ exports.up = function (knex) {
  * @returns { Promise<void> }
  */
 exports.down = function (knex) {
-  return knex.schema.dropTable('pantry_items')
+  return knex.schema.dropTable('supermarkets')
 }
