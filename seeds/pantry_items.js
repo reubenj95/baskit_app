@@ -1,0 +1,111 @@
+/**
+ * @param { import("knex").Knex } knex
+ * @returns { Promise<void> }
+ */
+exports.seed = async function (knex) {
+  // Deletes ALL existing entries
+  await knex('pantry_items').del()
+  await knex('pantry_items').insert([
+    {
+      quantity: 6,
+      name: 'Apples',
+      category: undefined,
+      brand: undefined,
+      image: '',
+      best_before: 2023 - 10 - 22,
+      is_fav: false,
+      created_by: 1234,
+    },
+    {
+      quantity: 2,
+      name: 'Onions',
+      category: undefined,
+      brand: undefined,
+      image: '',
+      best_before: 2023 - 10 - 22,
+      is_fav: false,
+      created_by: 1234,
+    },
+
+    {
+      quantity: 5,
+      name: 'Garlic',
+      category: undefined,
+      brand: undefined,
+      image: '',
+      best_before: 2023 - 10 - 22,
+      is_fav: false,
+      created_by: 1234,
+    },
+    {
+      quantity: 1,
+      name: 'Oat milk',
+      category: undefined,
+      brand: undefined,
+      image: '',
+      best_before: 2023 - 10 - 22,
+      is_fav: false,
+      created_by: 1234,
+    },
+    {
+      quantity: 1,
+      name: 'Bread',
+      category: undefined,
+      brand: undefined,
+      image: '',
+      best_before: 2023 - 10 - 22,
+      is_fav: false,
+      created_by: 1234,
+    },
+    {
+      quantity: 3,
+      name: 'Tofu',
+      category: undefined,
+      brand: undefined,
+      image: '',
+      best_before: 2023 - 10 - 22,
+      is_fav: false,
+      created_by: 1234,
+    },
+    {
+      quantity: 1,
+      name: 'Toilet cleaner',
+      category: undefined,
+      brand: undefined,
+      image: '',
+      best_before: 2023 - 10 - 22,
+      is_fav: false,
+      created_by: 1234,
+    },
+    {
+      quantity: 0,
+      name: 'Steak',
+      category: undefined,
+      brand: undefined,
+      image: '',
+      best_before: 2023 - 10 - 22,
+      is_fav: false,
+      created_by: 1234,
+    },
+    {
+      quantity: 1,
+      name: 'Cumin',
+      category: undefined,
+      brand: undefined,
+      image: '',
+      best_before: 2023 - 10 - 22,
+      is_fav: false,
+      created_by: 1234,
+    },
+    {
+      quantity: 24,
+      name: 'Beers',
+      category: undefined,
+      brand: undefined,
+      image: '',
+      best_before: 2023 - 10 - 22,
+      is_fav: false,
+      created_by: 1234,
+    },
+  ])
+}
