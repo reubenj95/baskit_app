@@ -9,8 +9,18 @@ export function addItemsToPantry(item: PantryItem[], db = connection) {
   return db('pantry_items').insert(item)
 }
 
-export function getPantryItems(id: number, db = connection) {}
+export function getPantryItems(id: number, db = connection) {
+  return db('pantry_items').where('created_by', id)
+}
 
-export function updatePantryItems(item: PantryItem[], db = connection) {}
+export function getOnePantryItem(itemId: number, db = connection) {
+  return db('pantry_items').select().where('id', itemId).first()
+}
 
-export function deletePantryItems(item: PantryItem[], db = connection) {}
+export function updatePantryItem(id: number, updates: any, db = connection) {
+  return db('pantry_items').where('id', id).update(updates, ['name'])
+}
+
+export function deletePantryItem(itemId: number, db = connection) {
+  return db('pantry_items').where('id', itemId).del()
+}
