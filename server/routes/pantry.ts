@@ -38,20 +38,20 @@ router.get('/:id', async (req, res) => {
   res.json(data)
 })
 
-router.put('/:id', async (req, res) => {
+router.patch('/:id', async (req, res) => {
   try {
-    const currentObject = await getOnePantryItem(Number(req.params.id))
-    const updates = {}
-    Object.values(currentObject).forEach((item, index) => {
-      const key = Object.keys(currentObject)[index]
-      console.log(item, req.body[key])
-      if (item && item !== req.body[key]) {
-        updates[key] = item
-      }
-    })
-    console.log(updates)
-    const response = await updatePantryItem(Number(req.params.id), updates)
-    res.send('Something happened')
+    // const currentObject = await getOnePantryItem(Number(req.params.id))
+    // const updates = {}
+    // Object.values(currentObject).forEach((item, index) => {
+    //   const key = Object.keys(currentObject)[index]
+    //   console.log(item, req.body[key])
+    //   if (item && item !== req.body[key]) {
+    //     updates[key] = item
+    //   }
+    // })
+    console.log(req.body)
+    await updatePantryItem(Number(req.params.id), req.body)
+    res.send('It finished')
   } catch (err) {
     console.log(err)
   }

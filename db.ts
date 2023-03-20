@@ -3,6 +3,8 @@ import config from './knexfile'
 const connection = knex(config.development)
 import { PantryItem } from './interface'
 
+type PantryItemUpdate = Partial<PantryItem>
+
 // ~~~ Pantry Items Endpoints ~~~ //
 
 export function addItemsToPantry(item: PantryItem[], db = connection) {
@@ -10,16 +12,16 @@ export function addItemsToPantry(item: PantryItem[], db = connection) {
 }
 
 export function getPantryItems(userId: number, db = connection) {
-  return db('pantry_items').where('created_by', userId)
+  return db<PantryItem[]>('pantry_items').where('created_by', userId)
 }
 
 export function getOnePantryItem(itemId: number, db = connection) {
-  return db('pantry_items').select().where('id', itemId).first()
+  return db<PantryItem>('pantry_items').select().where('id', itemId).first()
 }
 
 export function updatePantryItem(
   itemId: number,
-  updates: any,
+  updates: PantryItemUpdate,
   db = connection
 ) {
   return db('pantry_items').where('id', itemId).update(updates, ['name'])

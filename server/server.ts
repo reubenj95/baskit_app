@@ -4,7 +4,7 @@ import pantryRoutes from './routes/pantry'
 
 const server = express()
 server.use(express.static(join(__dirname, 'public')))
-server.use(express.urlencoded({ extended: false }))
+server.use(express.json())
 server.use('/pantry', pantryRoutes)
 
 server.get('*', (req, res) => {
