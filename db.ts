@@ -12,7 +12,7 @@ export function addItemsToPantry(item: PantryItem[], db = connection) {
 }
 
 export function getPantryItems(userId: number, db = connection) {
-  return db<PantryItem[]>('pantry_items').where('created_by', userId)
+  return db<PantryItem>('pantry_items').select().where('created_by', userId)
 }
 
 export function getOnePantryItem(itemId: number, db = connection) {
