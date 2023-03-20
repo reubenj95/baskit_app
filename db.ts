@@ -4,7 +4,6 @@ const connection = knex(config.development)
 import { PantryItem } from './interface'
 
 type PantryItemUpdate = Partial<PantryItem>
-
 // ~~~ Pantry Items Endpoints ~~~ //
 
 export function addItemsToPantry(item: PantryItem[], db = connection) {
