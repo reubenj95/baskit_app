@@ -1,4 +1,5 @@
 export interface PantryItem {
+  id: number
   quantity: number
   name: string
   category?: number | null

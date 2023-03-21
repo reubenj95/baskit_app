@@ -10,7 +10,9 @@ server.use('/api/v1/pantry', pantryRoutes)
 server.use('/api/v1/fridge', fridgeRoutes)
 
 server.get('*', (req, res) => {
-  res.sendFile('server/public/index.html')
+  res.sendFile(
+    '/Users/reubenjensen/Documents/devAcademy/personal-project/server/public/index.html'
+  )
 })
 
 export default server

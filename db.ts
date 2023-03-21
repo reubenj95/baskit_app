@@ -1,7 +1,7 @@
 import knex from 'knex'
 import config from './knexfile'
 const connection = knex(config.development)
-import { PantryItem } from './interface'
+import { PantryItem } from './models/interface'
 
 type PantryItemUpdate = Partial<PantryItem>
 
@@ -52,11 +52,13 @@ export function addItemToFridgeList(
 }
 export async function getLatestFridgeList(db = connection) {
   const max = await db('fridge_lists').max('created_at').first()
-  const result = await db('fridge_lists')
-    .select('id')
-    .where('created_at', max['max(`created_at`)'])
-    .first()
-  return result
+  if (max !== undefined) {
+    const result = await db('fridge_lists')
+      .select('id')
+      .where('created_at', max['max(`created_at`)'])
+      .first()
+    return result
+  }
 }
 
 export async function getFridgeList(
