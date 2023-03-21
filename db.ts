@@ -1,11 +1,11 @@
 import knex from 'knex'
 import config from './knexfile'
 const connection = knex(config.development)
-import { PantryItem } from './interface'
+import { PantryItem } from './models/interface'
 
 type PantryItemUpdate = Partial<PantryItem>
 
-// ~~~ Pantry Items Endpoints ~~~ //
+// ~~~ Pantry Items DB Funcs ~~~ //
 
 export function addItemsToPantry(item: PantryItem[], db = connection) {
   return db('pantry_items').insert(item)
@@ -31,11 +31,48 @@ export function deletePantryItem(itemId: number, db = connection) {
   return db('pantry_items').where('id', itemId).del()
 }
 
-//~~~ Fridge List End points ~~~ //
+//~~~ Fridge List Db Funcs ~~~ //
 
 export function createFridgeList(userId: number, db = connection) {
   return db('fridge_lists').insert({
     created_at: Date.now(),
     created_by: userId,
   })
+}
+
+export function addItemToFridgeList(
+  listId: number,
+  itemId: number,
+  db = connection
+) {
+  return db('fridge_lists_pantry_items').insert({
+    list_id: listId,
+    item_id: itemId,
+  })
+}
+export async function getLatestFridgeList(db = connection) {
+  const max = await db('fridge_lists').max('created_at').first()
+  if (max !== undefined) {
+    const result = await db('fridge_lists')
+      .select('id')
+      .where('created_at', max['max(`created_at`)'])
+      .first()
+    return result
+  }
+}
+
+export async function getFridgeList(
+  listId: number | undefined,
+  db = connection
+) {
+  const result = await db('fridge_lists_pantry_items')
+    .join(
+      'pantry_items',
+      'fridge_lists_pantry_items.item_id',
+      'pantry_items.id'
+    )
+    .select('id as item_id', 'quantity', 'name', 'category')
+    .where('list_id', listId)
+
+  return result
 }

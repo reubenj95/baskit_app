@@ -7,6 +7,7 @@ exports.seed = async function (knex) {
   await knex('supermarkets').del()
   await knex('supermarkets').insert([
     {
+      id: 1,
       name: 'Pak n Save Lower Hutt',
       lattitude: -41.2053826,
       longitude: 74.913372,
