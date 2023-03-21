@@ -39,3 +39,25 @@ export function createFridgeList(userId: number, db = connection) {
     created_by: userId,
   })
 }
+
+export function addItemToFridgeList(
+  listId: number,
+  itemId: number,
+  db = connection
+) {
+  return db('fridge_lists_pantry_items').insert({
+    list_id: listId,
+    item_id: itemId,
+  })
+}
+
+export function getFridgeList(listId: number, db = connection) {
+  return db('fridge_lists_pantry_items')
+    .join(
+      'pantry_items',
+      'fridge_lists_pantry_items.list_id',
+      'pantry_items.id'
+    )
+    .select()
+    .where('list_id', listId)
+}
