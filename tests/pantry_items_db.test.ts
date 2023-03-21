@@ -114,7 +114,7 @@ describe('Pantry Items DB Functions', () => {
   it('Should read all pantry items from the database for a given user ID', async () => {
     const actual = await getPantryItems(1234, testConnection)
     expect(actual).toHaveLength(10)
-    expect(actual[0]['name']).toBe('Apples')
+    expect(actual[0].name).toBe('Apples')
     expect(actual[3]['quantity']).toBe(1)
     expect(actual[5]['name']).toBe('Tofu')
     expect(actual[9]['quantity']).toBe(24)
