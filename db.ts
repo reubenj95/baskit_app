@@ -4,6 +4,7 @@ const connection = knex(config.development)
 import { PantryItem } from './interface'
 
 type PantryItemUpdate = Partial<PantryItem>
+
 // ~~~ Pantry Items Endpoints ~~~ //
 
 export function addItemsToPantry(item: PantryItem[], db = connection) {
@@ -28,4 +29,13 @@ export function updatePantryItem(
 
 export function deletePantryItem(itemId: number, db = connection) {
   return db('pantry_items').where('id', itemId).del()
+}
+
+//~~~ Fridge List End points ~~~ //
+
+export function createFridgeList(userId: number, db = connection) {
+  return db('fridge_lists').insert({
+    created_at: Date.now(),
+    created_by: userId,
+  })
 }
