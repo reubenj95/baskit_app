@@ -6,7 +6,7 @@
   "main": "server/index.js",
   "scripts": {
     "start": "run-p webpack server",
-    "dev": "run-p client:watch server:watch",
+    "dev": "run-p client:watch server:watch scss",
     "webpack": "webpack --config client/webpack.config.js",
     "server": "ts-node server/index.ts",
     "client:watch": "npm run webpack -- --watch",
@@ -14,7 +14,8 @@
     "test": "jest --watch --noStackTrace",
     "lint": "eslint --ext .js,.jsx,.ts,.tsx .",
     "format": "prettier -w '**/*.{js,jsx,ts,tsx}'",
-    "knex": "knex"
+    "knex": "knex",
+    "scss": "sass --watch client/main.scss server/public/main.css"
   },
   "babel": {
     "presets": [
@@ -75,6 +76,7 @@
   "dependencies": {
     "express": "^4.17.2",
     "knex": "^2.4.2",
+    "sass": "^1.59.3",
     "sqlite3": "^5.1.6",
     "ts-node": "^10.9.1"
   },
