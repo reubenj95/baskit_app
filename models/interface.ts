@@ -9,3 +9,7 @@ export interface PantryItem {
   is_fav: boolean
   created_by: number
 }
+
+export interface Indexable {
+  [key: string]: any
+}

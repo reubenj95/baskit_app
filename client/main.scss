@@ -12,14 +12,11 @@ $prefix: "mo-";
 // Then import Bootstrap
 @import "../node_modules/bootstrap/scss/bootstrap";
 
-ul{
-  list-style: none;
-  padding-left: 0;
-}
 
 #fridge-item-container{
   overflow: scroll;
   max-height: 500px;
+  padding: 0;
 }
 .pantryItem {
   display: flex;
@@ -103,6 +100,7 @@ ul{
   overflow: auto;
   overflow-x: scroll;
   scroll-snap-type: x mandatory;
+
   .swipe-element{
     scroll-snap-align: start;
     min-width: 100%;
@@ -127,4 +125,15 @@ ul{
     left: 16px;
     right: 16px;
   }
+}
+
+.swipe-element{
+  li{
+    list-style: none;
+  }
+}
+
+
+input#ascdesc{
+  opacity:0;
 }

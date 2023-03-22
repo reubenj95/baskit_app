@@ -11649,14 +11649,10 @@ textarea.form-control-lg {
     display: none !important;
   }
 }
-ul {
-  list-style: none;
-  padding-left: 0;
-}
-
 #fridge-item-container {
   overflow: scroll;
   max-height: 500px;
+  padding: 0;
 }
 
 .pantryItem {
@@ -11763,6 +11759,14 @@ ul {
   position: sticky;
   left: 16px;
   right: 16px;
+}
+
+.swipe-element li {
+  list-style: none;
+}
+
+input#ascdesc {
+  opacity: 0;
 }
 
 /*# sourceMappingURL=main.css.map */
