@@ -44,13 +44,18 @@ export function Sliders() {
     getPantryItems()
       .then((pantryItems) => {
         const sortedItems = arraySort(pantryItems, [groupBy, sortBy])
-        console.log(sortedItems)
+        if (ascDesc === 'fa-arrow-up-z-a') {
+          sortedItems.reverse()
+          setPantryItems(sortedItems)
+        } else {
+          setPantryItems(sortedItems)
+        }
         setPantryItems(sortedItems)
       })
       .catch((err) => {
         console.log(err)
       })
-  }, [groupBy, sortBy])
+  }, [groupBy, sortBy, ascDesc])
   return (
     <div className="container" id="fridge-item-container">
       <div>
@@ -103,3 +108,4 @@ export function Sliders() {
     </div>
   )
 }
+getPantryItems
