@@ -1,13 +1,13 @@
 import knex from 'knex'
 import config from './knexfile'
 const connection = knex(config.development)
-import { PantryItem } from './models/interface'
+import { PantryItem, PantryItemNoId } from './models/interface'
 
 type PantryItemUpdate = Partial<PantryItem>
 
 // ~~~ Pantry Items DB Funcs ~~~ //
 
-export function addItemsToPantry(item: PantryItem[], db = connection) {
+export function addItemsToPantry(item: PantryItemNoId[], db = connection) {
   return db('pantry_items').insert(item)
 }
 
@@ -75,4 +75,12 @@ export async function getFridgeList(
     .where('list_id', listId)
 
   return result
+}
+
+export function removeFromFridgeList(
+  listId: number,
+  itemId: number,
+  db = connection
+) {
+  return db('fridge_lists').where({ list_id: listId, item_id: itemId }).del()
 }

@@ -10,6 +10,4 @@ export interface PantryItem {
   created_by: number
 }
 
-export interface Indexable {
-  [key: string]: any
-}
+export type PantryItemNoId = Omit<PantryItem, 'id'>

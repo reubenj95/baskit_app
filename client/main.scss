@@ -137,3 +137,17 @@ $prefix: "mo-";
 input#ascdesc{
   opacity:0;
 }
+
+.offscreen-right{
+  position: absolute;
+  left: 100%;
+}
+
+.edit-container{
+  width: 75%;
+
+  .pantry-item-details{
+    display: flex;
+    flex-direction: column;
+  }
+}
