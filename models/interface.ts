@@ -9,3 +9,5 @@ export interface PantryItem {
   is_fav: boolean
   created_by: number
 }
+
+export type PantryItemNoId = Omit<PantryItem, 'id'>

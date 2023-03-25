@@ -89,7 +89,7 @@ describe('Pantry Items DB Functions', () => {
 
     expect(allPantryItems).toHaveLength(EXPECTED_LENGTH)
     expect(allPantryItems[11]).toEqual({
-      id: 24,
+      id: 13,
       quantity: 6,
       name: 'Apples',
       category: 1,
@@ -100,7 +100,7 @@ describe('Pantry Items DB Functions', () => {
       created_by: 1234,
     })
     expect(allPantryItems[12]).toEqual({
-      id: 25,
+      id: 14,
       quantity: 13,
       name: 'oranges',
       category: 1,
@@ -121,9 +121,9 @@ describe('Pantry Items DB Functions', () => {
   })
   it('Should read one pantry item from the database given an id', async () => {
     const expected = await testConnection('pantry_items')
-      .where('id', 39)
+      .where('id', 11)
       .first()
-    expect(await getOnePantryItem(39, testConnection)).toEqual(expected)
+    expect(await getOnePantryItem(11, testConnection)).toEqual(expected)
   })
   it('Should update a pantry item in the database', async () => {
     const item = {
@@ -145,7 +145,6 @@ describe('Pantry Items DB Functions', () => {
     expect(actual.quantity).toBe(1)
     expect(actual.created_by).toBe(1234)
   })
-
   it('Should delete a pantry item from the database', async () => {
     const allItems = await testConnection('pantry_items').select()
     await deletePantryItem(allItems[0].id, testConnection)
@@ -153,4 +152,12 @@ describe('Pantry Items DB Functions', () => {
     expect(actual).toHaveLength(allItems.length - 1)
     expect(actual[0].name).toBe('Onions')
   })
+})
+
+describe('Fridge list DB functions', () => {
+  it.todo('Should create a new fridge list')
+  it.todo('Should allow you to add pantry items to the fridge list')
+  it.todo('Should return the latest fridge list id')
+  it.todo('Should return a list of Pantry items from the latest fridge list')
+  it.todo('Should remove items from the fridge list')
 })

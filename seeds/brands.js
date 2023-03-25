@@ -24,5 +24,12 @@ exports.seed = async function (knex) {
       colour: '#9b05f2',
       created_by: 1234,
     },
+    {
+      id: 7,
+      name: 'Store Brand',
+      image: '',
+      colour: '#eaeaea',
+      created_by: 1234,
+    },
   ])
 }

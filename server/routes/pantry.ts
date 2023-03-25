@@ -48,7 +48,7 @@ router.patch('/:id', async (req, res) => {
   try {
     console.log(req.body)
     await db.updatePantryItem(Number(req.params.id), req.body)
-    res.send('It finished')
+    res.send('Item updated')
   } catch (err) {
     console.log(err)
   }
