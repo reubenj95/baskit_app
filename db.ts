@@ -82,5 +82,11 @@ export function removeFromFridgeList(
   itemId: number,
   db = connection
 ) {
-  return db('fridge_lists').where({ list_id: listId, item_id: itemId }).del()
+  return db('fridge_lists_pantry_items')
+    .where({ list_id: listId, item_id: itemId })
+    .del()
+}
+
+export function deleteFridgeList(id: number, db = connection) {
+  return db('fridge_lists').where('id', id).del()
 }

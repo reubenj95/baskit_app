@@ -160,4 +160,5 @@ describe('Fridge list DB functions', () => {
   it.todo('Should return the latest fridge list id')
   it.todo('Should return a list of Pantry items from the latest fridge list')
   it.todo('Should remove items from the fridge list')
+  it.todo('Should delete a fridge list')
 })
