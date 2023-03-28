@@ -71,7 +71,7 @@ export async function getFridgeList(
       'fridge_lists_pantry_items.item_id',
       'pantry_items.id'
     )
-    .select('id as item_id', 'quantity', 'name', 'category')
+    .select('id', 'quantity', 'name', 'category')
     .where('list_id', listId)
 
   return result

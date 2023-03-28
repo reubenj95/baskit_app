@@ -1,8 +1,7 @@
-import { useEffect } from 'react'
 import { FridgeItem, PantryItem } from '../../models/pantryItems'
 
 interface Props {
-  listItem: FridgeItem
+  listItem: FridgeItem | PantryItem
 }
 export function Sliders({ listItem }: Props) {
   //useEffect(() => {}, [])

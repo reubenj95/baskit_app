@@ -14,8 +14,6 @@ export default function FridgeList() {
   // Redux with Thunk actions
   useEffect(() => {
     dispatch(fetchFridgeList())
-      .then((response) => console.log(response))
-      .catch((err) => console.error(err))
   }, [dispatch])
 
   if (isLoading) {
@@ -30,7 +28,6 @@ export default function FridgeList() {
       <div className="container">
         {data &&
           data.map((item) => {
-            console.log(item)
             return <Sliders listItem={item} key={item.id} />
           })}
       </div>
