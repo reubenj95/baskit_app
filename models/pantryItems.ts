@@ -11,3 +11,5 @@ export interface PantryItem {
 }
 
 export type PantryItemNoId = Omit<PantryItem, 'id'>
+
+export type FridgeItem = Partial<PantryItem>

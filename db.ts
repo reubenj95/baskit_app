@@ -1,7 +1,7 @@
 import knex from 'knex'
 import config from './knexfile'
 const connection = knex(config.development)
-import { PantryItem, PantryItemNoId } from './models/interface'
+import { PantryItem, PantryItemNoId } from './models/pantryItems'
 
 type PantryItemUpdate = Partial<PantryItem>
 
