@@ -6,7 +6,3 @@ export async function fetchFridgeItems(): Promise<FridgeItem[]> {
   const response = await request.get(rootUrl + '/fridge')
   return response.body
 }
-
-// export async function addFridgeItem(fridgeItem: FridgeItem) {
-//   return request.post()
-// }

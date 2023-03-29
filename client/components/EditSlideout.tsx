@@ -1,22 +1,31 @@
-import { getOnePantryItem } from '../../db'
+import { useAppSelector } from '../hooks'
+import { LoadingOverlay, Button, Group, Box } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
-import { Drawer, Button, Group } from '@mantine/core'
+import { useEffect } from 'react'
 interface ItemId {
   itemId: number
 }
 
-export default function EditPantryItem() {
-  const [opened, { open, close }] = useDisclosure(false)
+export default function EditSlideout() {
+  const [visible, { toggle }] = useDisclosure(true)
 
-  return (
-    <>
-      <Drawer opened={opened} onClose={close} title="Authentication">
-        {/* Drawer content */}
-      </Drawer>
-
-      <Group position="center">
-        <Button onClick={open}>Open Drawer</Button>
-      </Group>
-    </>
+  const { isLoading, error, data } = useAppSelector(
+    (state) => state.onePantryItem
   )
+
+  if (isLoading) {
+    return <LoadingOverlay visible={visible} overlayBlur={2} />
+  }
+  if (error) {
+    return <div>Something went wrong retrieving your fridge list</div>
+  }
+  if (data) {
+    return (
+      <>
+        <h2>{data.name}</h2>
+        <p>{data.quantity}</p>
+      </>
+    )
+  }
+  return <p>Something went wrong...</p>
 }

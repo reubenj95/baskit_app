@@ -1,20 +1,26 @@
-import { FridgeItem, PantryItem } from '../../models/pantryItems'
+import { PantryItem } from '../../models/pantryItems'
+import { fetchSelectedPantryItem } from '../actions/onePantryItem'
+import { useAppDispatch, useAppSelector } from '../hooks'
 
 interface Props {
-  listItem: FridgeItem | PantryItem
+  listItem: PantryItem
+  opened: () => void
 }
-export function Sliders({ listItem }: Props) {
+export function Sliders(props: Props) {
   //useEffect(() => {}, [])
+  const dispatch = useAppDispatch()
+
+  const { listItem, opened } = props
 
   function handleSwipe(event: React.TouchEvent<HTMLDivElement>) {
     const minDistance = 80
     const container = event.currentTarget
     const swipeDistance = container.scrollLeft - container.clientWidth
-    const itemId = Number(container.id.slice(4))
     if (swipeDistance < minDistance * -1) {
-      console.log(itemId)
+      console.log('1')
     } else if (swipeDistance > minDistance) {
-      console.log(itemId)
+      dispatch(fetchSelectedPantryItem(listItem.id))
+      opened()
     } else {
       console.log(`did not swipe ${minDistance}px`)
     }
