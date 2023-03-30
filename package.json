@@ -105,7 +105,8 @@
   },
   "jest": {
     "preset": "ts-jest",
-    "testEnvironment": "jsdom"
+    "testEnvironment": "jsdom",
+    "collectCoverage": true
   },
   "browserslist": "> 2%, not dead"
 }

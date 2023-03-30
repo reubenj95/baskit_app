@@ -28,8 +28,7 @@ export default function FridgeList() {
       <div className="container">
         {data &&
           data.map((item) => {
-            return <p>Bananas</p>
-            //return <Sliders listItem={item} key={item.id} />
+            return <Sliders listItem={item} key={item.id} />
           })}
       </div>
     </>

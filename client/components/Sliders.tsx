@@ -1,3 +1,4 @@
+import { Divider, Grid, Text } from '@mantine/core'
 import { PantryItem } from '../../models/pantryItems'
 import { fetchSelectedPantryItem } from '../actions/onePantryItem'
 import { useAppDispatch, useAppSelector } from '../hooks'
@@ -27,20 +28,40 @@ export function Sliders(props: Props) {
   }
 
   return (
-    <div
-      className="swipe-container"
-      id={`item${listItem.id}`}
-      onTouchEnd={handleSwipe}
-    >
-      <div className="action left">
-        <i className="fa-solid fa-trash"></i>
+    <>
+      <div
+        className="swipe-container"
+        id={`item${listItem.id}`}
+        onTouchEnd={handleSwipe}
+      >
+        <div className="action left">
+          <i className="fa-solid fa-trash"></i>
+        </div>
+        <div className="swipe-element">
+          <Grid>
+            <Grid.Col span={2}>
+              <Text>
+                <span className="fridge-qty">{listItem.quantity}</span>
+              </Text>
+            </Grid.Col>
+            <Grid.Col span={6}>{listItem.name}</Grid.Col>
+            <Grid.Col span={4}>
+              <div className="flex">
+                $
+                <input
+                  type="number"
+                  id="price"
+                  name="price"
+                  placeholder="0.00"
+                />
+              </div>
+            </Grid.Col>
+          </Grid>
+        </div>
+        <div className="action right">
+          <i className="fa-solid fa-pen"></i>
+        </div>
       </div>
-      <div className="swipe-element">
-        {listItem.quantity} - {listItem.name}
-      </div>
-      <div className="action right">
-        <i className="fa-solid fa-pen"></i>
-      </div>
-    </div>
+    </>
   )
 }
