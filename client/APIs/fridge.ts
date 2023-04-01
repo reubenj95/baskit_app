@@ -1,8 +1,21 @@
 import request from 'superagent'
-import { FridgeItem } from '../../models/pantryItems'
+import { PantryItem, FridgeItem } from '../../models/pantryItems'
 const rootUrl = '/api/v1'
 
-export async function fetchFridgeItems(): Promise<FridgeItem[]> {
+export async function fetchFridgeItems(): Promise<PantryItem[]> {
+  const response = await request.get(rootUrl + '/fridge')
+  return response.body
+}
+interface ListId {
+  id: number
+}
+export async function fetchLatestFridgeList(): Promise<ListId> {
+  const response = await request.get(rootUrl + '/fridge/latest')
+  return response.body
+}
+
+export async function addItemToFridgeList(listId: number, itemId: number) {
+  await request.post(rootUrl + `/fridge/${listId}`).send({ itemId })
   const response = await request.get(rootUrl + '/fridge')
   return response.body
 }

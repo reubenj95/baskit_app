@@ -4,7 +4,7 @@ import {
   RECEIVE_FRIDGE_ITEMS,
   FAILURE_FRIDGE_ITEMS,
 } from '../actions/fridgeList'
-import { FridgeItem } from '../../models/pantryItems'
+import { PantryItem } from '../../models/pantryItems'
 
 const initialState: FridgeState = {
   data: [],
@@ -14,7 +14,7 @@ const initialState: FridgeState = {
 
 // STRETCH: use discriminated unions to make this type more specific
 type FridgeState = {
-  data: FridgeItem[] | undefined
+  data: PantryItem[] | undefined
   error: string | null
   isLoading: boolean
 }

@@ -1,7 +1,11 @@
 import type { ThunkAction } from '../store'
-import { FridgeItem } from '../../models/pantryItems'
+import { PantryItem, FridgeItem } from '../../models/pantryItems'
 
-import { fetchFridgeItems } from '../APIs/fridge'
+import {
+  addItemToFridgeList,
+  fetchFridgeItems,
+  fetchLatestFridgeList,
+} from '../APIs/fridge'
 
 export const REQUEST_FRIDGE_ITEMS = 'REQUEST_FRIDGE_ITEMS'
 export const RECEIVE_FRIDGE_ITEMS = 'RECEIVE_FRIDGE_ITEMS'
@@ -9,7 +13,7 @@ export const FAILURE_FRIDGE_ITEMS = 'FAILURE_FRIDGE_ITEMS'
 
 export type FridgeItemAction =
   | { type: typeof REQUEST_FRIDGE_ITEMS }
-  | { type: typeof RECEIVE_FRIDGE_ITEMS; payload: FridgeItem[] }
+  | { type: typeof RECEIVE_FRIDGE_ITEMS; payload: PantryItem[] }
   | { type: typeof FAILURE_FRIDGE_ITEMS; payload: string }
 
 export function requestFridgeItems(): FridgeItemAction {
@@ -19,7 +23,7 @@ export function requestFridgeItems(): FridgeItemAction {
 }
 
 export function receiveFridgeItems(
-  fridgeItems: FridgeItem[]
+  fridgeItems: PantryItem[]
 ): FridgeItemAction {
   return {
     type: RECEIVE_FRIDGE_ITEMS,
@@ -51,16 +55,17 @@ export function fetchFridgeList(): ThunkAction {
   }
 }
 
-// export function addFridgeItem(newPantryItem: FridgeItem): ThunkAction {
-//   return (dispatch) => {
-//     return getLatestFridgeList().then((listId) => {
-//       return addFridgeItem()
-//     })
-//       .then((fridgeItems) => {
-//         dispatch(receiveFridgeItems(fridgeItems))
-//       })
-//       .catch((err) => {
-//         dispatch(failureFridgeItems(err.message))
-//       })
-//   }
-// }
+export function addToFridgeList(newPantryItem: PantryItem): ThunkAction {
+  return (dispatch) => {
+    return fetchLatestFridgeList()
+      .then((listId) => {
+        return addItemToFridgeList(listId.id, newPantryItem.id)
+      })
+      .then((fridgeItems) => {
+        dispatch(receiveFridgeItems(fridgeItems))
+      })
+      .catch((err) => {
+        dispatch(failureFridgeItems(err.message))
+      })
+  }
+}

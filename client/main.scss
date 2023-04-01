@@ -177,3 +177,30 @@ input#ascdesc{
     flex-direction: column;
   }
 }
+
+.footer-button-container{
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  margin: 10px;
+  font-size: 1.2em;
+
+  .footer-button{
+    width: 33%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: 25px;
+  }
+
+  i{
+    margin-right: 7px;
+    color: #000 !important;
+  }
+  p{
+    margin: 0px;
+    color: #000 !important;
+  }
+}
+
+

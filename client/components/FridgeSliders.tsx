@@ -45,17 +45,17 @@ export function Sliders(props: Props) {
               </Text>
             </Grid.Col>
             <Grid.Col span={6}>{listItem.name}</Grid.Col>
-            <Grid.Col span={4}>
+            {/* <Grid.Col span={4}>
               <div className="flex">
                 $
                 <input
                   type="number"
                   id="price"
                   name="price"
-                  placeholder="0.00"
+                  placeholder="0"
                 />
               </div>
-            </Grid.Col>
+            </Grid.Col> */}
           </Grid>
         </div>
         <div className="action right">

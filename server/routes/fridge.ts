@@ -12,6 +12,15 @@ router.get('/', async (req, res) => {
   }
 })
 
+router.get('/latest', async (req, res) => {
+  try {
+    const listId = await db.getLatestFridgeList()
+    res.json(listId)
+  } catch (err) {
+    console.log(err)
+  }
+})
+
 router.post('/new', async (req, res) => {
   const authLayer = 1234
   try {
@@ -23,6 +32,7 @@ router.post('/new', async (req, res) => {
 })
 router.post('/:listId', async (req, res) => {
   await db.addItemToFridgeList(Number(req.params.listId), req.body.itemId)
+  res.json({ message: 'Mischief managed' })
 })
 
 router.delete('/:listId', async (req, res) => {

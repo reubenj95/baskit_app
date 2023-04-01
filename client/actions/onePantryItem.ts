@@ -2,6 +2,7 @@ import type { ThunkAction } from '../store'
 import { PantryItem } from '../../models/pantryItems'
 
 import { fetchOnePantryItem } from '../APIs/pantry'
+import { useAppSelector } from '../hooks'
 export const REQUEST_PANTRY_ITEM = 'REQUEST_PANTRY_ITEM'
 export const RECEIVE_PANTRY_ITEM = 'RECEIVE_PANTRY_ITEM'
 export const FAILURE_PANTRY_ITEM = 'FAILURE_PANTRY_ITEM'
