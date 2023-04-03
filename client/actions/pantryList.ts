@@ -1,7 +1,7 @@
 import type { ThunkAction } from '../store'
 import { FridgeItem, PantryItem } from '../../models/pantryItems'
 
-import { addToPantry, fetchPantryItems } from '../APIs/pantry'
+import api from '../APIs/pantry'
 
 export const REQUEST_PANTRY_ITEMS = 'REQUEST_PANTRY_ITEMS'
 export const RECEIVE_PANTRY_ITEMS = 'RECEIVE_PANTRY_ITEMS'
@@ -42,10 +42,11 @@ export function failurePantryItems(errorMessage: string): PantryItemAction {
   }
 }
 
-export function fetchPantryList(): ThunkAction {
+function fetchPantryList(): ThunkAction {
   return (dispatch) => {
     dispatch(requestPantryItems())
-    return fetchPantryItems()
+    return api
+      .fetchPantryItems()
       .then((pantryItems) => {
         dispatch(receivePantryItems(pantryItems))
       })
@@ -59,10 +60,11 @@ export function fetchPantryList(): ThunkAction {
   }
 }
 
-export function createPantryItem(newItem: FridgeItem): ThunkAction<number[]> {
-  return (dispatch, getState) => {
+function addToPantry(newItem: FridgeItem): ThunkAction<number[]> {
+  return (dispatch) => {
     dispatch(requestPantryItems())
-    return addToPantry(newItem)
+    return api
+      .addToPantry(newItem)
       .then((response) => {
         dispatch(receivePantryItems(response[1]))
         return response[0]
@@ -75,4 +77,26 @@ export function createPantryItem(newItem: FridgeItem): ThunkAction<number[]> {
         }
       })
   }
+}
+
+function deleteFromPantry(itemId: number): ThunkAction {
+  return async (dispatch) => {
+    try {
+      await dispatch(requestPantryItems())
+      const response = await api.deletePantryItem(itemId)
+      await dispatch(receivePantryItems(response))
+    } catch (err) {
+      if (err instanceof Error) {
+        dispatch(failurePantryItems(err.message))
+      } else {
+        dispatch(failurePantryItems('An unknown error occurred'))
+      }
+    }
+  }
+}
+
+export default {
+  addToPantry,
+  fetchPantryList,
+  deleteFromPantry,
 }

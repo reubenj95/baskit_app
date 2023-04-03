@@ -55,4 +55,9 @@ router.patch('/:id', async (req, res) => {
   }
 })
 
+router.delete('/:id', async (req, res) => {
+  const data = await db.deletePantryItem(Number(req.params.id))
+  res.json(data)
+})
+
 export default router

@@ -1,10 +1,10 @@
 import { Drawer, Title } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { useEffect } from 'react'
-import { fetchPantryList } from '../actions/pantryList'
+import pantryAction from '../actions/pantryList'
 import { useAppDispatch, useAppSelector } from '../hooks'
 import EditSlideout from './EditSlideout'
-import { Sliders } from './Sliders'
+import PantrySliders from './PantrySliders'
 
 export default function PantryList() {
   const { isLoading, error, data } = useAppSelector((state) => state.pantryList)
@@ -13,7 +13,7 @@ export default function PantryList() {
   const [opened, { open, close }] = useDisclosure(false)
 
   useEffect(() => {
-    dispatch(fetchPantryList())
+    dispatch(pantryAction.fetchPantryList())
   }, [dispatch])
 
   if (isLoading) {
@@ -31,7 +31,11 @@ export default function PantryList() {
         {data &&
           data.map((item) => {
             return (
-              <Sliders key={item.id} listItem={item} opened={() => open()} />
+              <PantrySliders
+                key={item.id}
+                listItem={item}
+                opened={() => open()}
+              />
             )
           })}
 

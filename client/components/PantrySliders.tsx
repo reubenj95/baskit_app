@@ -1,37 +1,41 @@
-import { Grid, Text } from '@mantine/core'
+import { Button, Grid, Modal, Text, Title } from '@mantine/core'
 import { PantryItem } from '../../models/pantryItems'
-import { fetchSelectedPantryItem } from '../actions/onePantryItem'
 import { useAppDispatch, useAppSelector } from '../hooks'
+import pantryAction from '../actions/pantryList'
+import { useDisclosure } from '@mantine/hooks'
+import { useState } from 'react'
 
 interface Props {
   listItem: PantryItem
   opened: () => void
 }
-export function Sliders(props: Props) {
-  //useEffect(() => {}, [])
+export default function Sliders(props: Props) {
   const dispatch = useAppDispatch()
-
-  const { listItem, opened } = props
+  const [opened, { open, close }] = useDisclosure(false)
+  const [selected, setSelected] = useState(0)
 
   function handleSwipe(event: React.TouchEvent<HTMLDivElement>) {
     const minDistance = 80
     const container = event.currentTarget
     const swipeDistance = container.scrollLeft - container.clientWidth
     if (swipeDistance < minDistance * -1) {
-      console.log('1')
+      setSelected(Number(event.currentTarget.id.substring(4)))
+      open()
     } else if (swipeDistance > minDistance) {
-      dispatch(fetchSelectedPantryItem(listItem.id))
-      opened()
+      props.opened()
     } else {
       console.log(`did not swipe ${minDistance}px`)
     }
+  }
+  function handleDelete() {
+    dispatch(pantryAction.deleteFromPantry(selected))
   }
 
   return (
     <>
       <div
         className="swipe-container"
-        id={`item${listItem.id}`}
+        id={`item${props.listItem.id}`}
         onTouchEnd={handleSwipe}
       >
         <div className="action left">
@@ -41,10 +45,10 @@ export function Sliders(props: Props) {
           <Grid>
             <Grid.Col span={2}>
               <Text>
-                <span className="fridge-qty">{listItem.quantity}</span>
+                <span className="fridge-qty">{props.listItem.quantity}</span>
               </Text>
             </Grid.Col>
-            <Grid.Col span={6}>{listItem.name}</Grid.Col>
+            <Grid.Col span={6}>{props.listItem.name}</Grid.Col>
             <Grid.Col span={4}>
               <div className="flex">
                 $
@@ -62,6 +66,17 @@ export function Sliders(props: Props) {
           <i className="fa-solid fa-pen"></i>
         </div>
       </div>
+      <Modal
+        opened={opened}
+        onClose={close}
+        withCloseButton={false}
+        yOffset="25vh"
+      >
+        <Title>Are you sure you want to delete this item?</Title>
+        <Text>This cannot be undone.</Text>
+        <Button onClick={handleDelete}>Yes, delete</Button>
+        <Button onClick={close}>No, go back</Button>
+      </Modal>
     </>
   )
 }

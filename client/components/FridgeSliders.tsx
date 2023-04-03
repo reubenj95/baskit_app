@@ -1,15 +1,13 @@
 import { Grid, Text } from '@mantine/core'
 import { PantryItem } from '../../models/pantryItems'
 import { deleteFromFridgeList } from '../actions/fridgeList'
-import { fetchSelectedPantryItem } from '../actions/onePantryItem'
 import { useAppDispatch, useAppSelector } from '../hooks'
 
 interface Props {
   listItem: PantryItem
   opened: () => void
 }
-export function Sliders(props: Props) {
-  //useEffect(() => {}, [])
+export default function FridgeSliders(props: Props) {
   const dispatch = useAppDispatch()
 
   const { listItem, opened } = props
@@ -21,7 +19,7 @@ export function Sliders(props: Props) {
     if (swipeDistance < minDistance * -1) {
       dispatch(deleteFromFridgeList(listItem.id))
     } else if (swipeDistance > minDistance) {
-      dispatch(fetchSelectedPantryItem(listItem.id))
+      //dispatch(fetchSelectedPantryItem(listItem.id))
       opened()
     } else {
       console.log(`did not swipe ${minDistance}px`)

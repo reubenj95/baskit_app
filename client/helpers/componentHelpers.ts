@@ -1,6 +1,6 @@
 import { PantryItemNoId } from '../../models/pantryItems'
 
-export function parseFridgeInput(input: string): PantryItemNoId {
+function parseFridgeInput(input: string): PantryItemNoId {
   const inputArray = input.split(',')
   const name =
     inputArray[0].charAt(0).toUpperCase() +
@@ -18,4 +18,8 @@ export function parseFridgeInput(input: string): PantryItemNoId {
   }
 
   return parsedObject
+}
+
+export default {
+  parseFridgeInput,
 }

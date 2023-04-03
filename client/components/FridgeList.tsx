@@ -9,16 +9,12 @@ import {
 } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { useEffect, useState } from 'react'
-import { addToFridgeList, fetchFridgeList } from '../actions/fridgeList'
+import fridgeAction from '../actions/fridgeList'
 import { useAppDispatch, useAppSelector } from '../hooks'
-import { Sliders } from './FridgeSliders'
-import { fetchPantryList, createPantryItem } from '../actions/pantryList'
-import { parseFridgeInput } from '../helpers/componentHelpers'
-import { addToFridgeListCombined } from '../actions/addToFridge'
+import FridgeSliders from './FridgeSliders'
+import pantryAction from '../actions/pantryList'
 
 export default function FridgeList() {
-  //const [newFruit, setNewFruit] = useState({ name: '' } as FruitCreate)
-  //import { FruitCreate } from '../../models/pantryItems'
   const fridgeState = useAppSelector((state) => state.fridgeList)
   const pantryState = useAppSelector((state) => state.pantryList)
   const [opened, { open, close }] = useDisclosure(false)
@@ -26,19 +22,18 @@ export default function FridgeList() {
   const [options, setOptions] = useState([] as string[])
   const dispatch = useAppDispatch()
 
-  // Redux with Thunk actions
   useEffect(() => {
-    dispatch(fetchFridgeList())
-    dispatch(fetchPantryList())
+    dispatch(fridgeAction.fetchFridgeList())
+    dispatch(pantryAction.fetchPantryList())
   }, [dispatch])
 
   useEffect(() => {
     updateOptions()
-  }, [pantryState.data])
+  }, [pantryState.data, fridgeState.data])
 
   function handleAddItem(evt: React.FormEvent<HTMLFormElement>) {
     evt.preventDefault()
-    dispatch(addToFridgeListCombined(input))
+    dispatch(fridgeAction.addItemToFridgeList(input))
     clearInput()
   }
 
@@ -47,8 +42,12 @@ export default function FridgeList() {
   }
 
   function updateOptions() {
-    if (pantryState.data) {
-      const data = pantryState.data.map((item) => item.name)
+    if (pantryState.data && fridgeState.data) {
+      const pantryItems = pantryState.data.map((item) => item.name)
+      const fridgeItems = fridgeState.data.map((item) => item.name)
+      const data = pantryItems.filter((item) => {
+        return !fridgeItems.some((element) => element == item)
+      })
       setOptions(data)
     }
   }
@@ -93,7 +92,11 @@ export default function FridgeList() {
         {fridgeState.data &&
           fridgeState.data.map((item) => {
             return (
-              <Sliders key={item.id} listItem={item} opened={() => open()} />
+              <FridgeSliders
+                key={item.id}
+                listItem={item}
+                opened={() => open()}
+              />
             )
           })}
       </div>

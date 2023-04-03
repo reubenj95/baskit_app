@@ -97,3 +97,9 @@ export function removeFromFridgeList(
 export function deleteFridgeList(id: number, db = connection) {
   return db('fridge_lists').where('id', id).del()
 }
+
+//~~~ Categories Functions ~~~~\\
+
+export function getCategories(db = connection) {
+  return db('categories').select()
+}
