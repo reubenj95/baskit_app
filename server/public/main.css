@@ -7,7 +7,7 @@ body {
 
 #fridge-item-container {
   overflow: scroll;
-  max-height: 500px;
+  max-height: 100%;
   padding: 0;
 }
 
@@ -150,19 +150,6 @@ input#ascdesc {
   opacity: 0;
 }
 
-.offscreen-right {
-  position: absolute;
-  left: 100%;
-}
-
-.edit-container {
-  width: 75%;
-}
-.edit-container .pantry-item-details {
-  display: flex;
-  flex-direction: column;
-}
-
 .footer-button-container {
   width: 100%;
   display: flex;
@@ -184,6 +171,18 @@ input#ascdesc {
 .footer-button-container p {
   margin: 0px;
   color: #000 !important;
+}
+
+.slider-group {
+  margin: 20px 0 0 0;
+}
+.slider-group .header-box {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+.slider-group h3 {
+  margin-left: 10px;
 }
 
 /*# sourceMappingURL=main.css.map */

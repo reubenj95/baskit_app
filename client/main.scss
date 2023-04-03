@@ -12,7 +12,7 @@ $prefix: "mo-";
 
 #fridge-item-container{
   overflow: scroll;
-  max-height: 500px;
+  max-height: 100%;
   padding: 0;
 }
 .pantryItem {
@@ -164,19 +164,6 @@ input#ascdesc{
   opacity:0;
 }
 
-.offscreen-right{
-  position: absolute;
-  left: 100%;
-}
-
-.edit-container{
-  width: 75%;
-
-  .pantry-item-details{
-    display: flex;
-    flex-direction: column;
-  }
-}
 
 .footer-button-container{
   width: 100%;
@@ -204,3 +191,14 @@ input#ascdesc{
 }
 
 
+.slider-group{
+  margin: 20px 0 0 0;
+  .header-box{
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+  h3{
+    margin-left: 10px;
+  }  
+}

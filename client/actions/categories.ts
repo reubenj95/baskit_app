@@ -1,4 +1,4 @@
-import type { ThunkAction } from 'redux-thunk'
+import type { ThunkAction } from '../store'
 import api from '../APIs/categories'
 
 import { Category } from '../../models/pantryItems'
@@ -11,7 +11,7 @@ export const FAILURE_CATEGORIES = 'FAILURE_CATEGORIES'
 
 export type CategoryAction =
   | { type: typeof REQUEST_CATEGORIES }
-  | { type: typeof RECEIVE_CATEGORIES; payload: Category }
+  | { type: typeof RECEIVE_CATEGORIES; payload: Category[] }
   | { type: typeof FAILURE_CATEGORIES; payload: string }
 
 export function requestCategories(): CategoryAction {
@@ -34,19 +34,20 @@ export function failureCategories(errorMessage: string): CategoryAction {
   }
 }
 
-export function fetchCategories(): ThunkAction {
-  return (dispatch) => {
-    dispatch(requestCategories())
-    return getCategories()
-      .then((categories) => {
-        dispatch(receiveCategories(categories))
-      })
-      .catch((err) => {
-        if (err instanceof Error) {
-          dispatch(failureCategories(err.message))
-        } else {
-          dispatch(failureCategories('An unknown error occurred'))
-        }
-      })
+function fetchCategories(): ThunkAction {
+  return async (dispatch) => {
+    try {
+      dispatch(requestCategories())
+      const categories = await api.getCategories()
+      dispatch(receiveCategories(categories))
+    } catch (err) {
+      if (err instanceof Error) {
+        dispatch(failureCategories(err.message))
+      } else {
+        dispatch(failureCategories('An unknown error occurred'))
+      }
+    }
   }
 }
+
+export default { fetchCategories }

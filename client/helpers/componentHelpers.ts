@@ -1,4 +1,4 @@
-import { PantryItemNoId } from '../../models/pantryItems'
+import { Category, PantryItemNoId } from '../../models/pantryItems'
 
 function parseFridgeInput(input: string): PantryItemNoId {
   const inputArray = input.split(',')
@@ -20,6 +20,16 @@ function parseFridgeInput(input: string): PantryItemNoId {
   return parsedObject
 }
 
+function filterCategories(
+  categoryId: number,
+  categories: Category[]
+): Category {
+  const filtered = categories.find((item) => item.id === categoryId)
+  console.log(filtered)
+  return filtered
+}
+
 export default {
   parseFridgeInput,
+  filterCategories,
 }
