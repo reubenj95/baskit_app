@@ -5,6 +5,7 @@ import {
   addItemToFridgeList,
   fetchFridgeItems,
   fetchLatestFridgeList,
+  removeFromFridgeList,
 } from '../APIs/fridge'
 
 export const REQUEST_FRIDGE_ITEMS = 'REQUEST_FRIDGE_ITEMS'
@@ -55,11 +56,26 @@ export function fetchFridgeList(): ThunkAction {
   }
 }
 
-export function addToFridgeList(newPantryItem: PantryItem): ThunkAction {
+export function addToFridgeList(newItemId: number): ThunkAction {
   return (dispatch) => {
     return fetchLatestFridgeList()
       .then((listId) => {
-        return addItemToFridgeList(listId.id, newPantryItem.id)
+        return addItemToFridgeList(listId.id, newItemId)
+      })
+      .then((fridgeItems) => {
+        dispatch(receiveFridgeItems(fridgeItems))
+      })
+      .catch((err) => {
+        dispatch(failureFridgeItems(err.message))
+      })
+  }
+}
+
+export function deleteFromFridgeList(itemId: number): ThunkAction {
+  return (dispatch) => {
+    return fetchLatestFridgeList()
+      .then((listId) => {
+        return removeFromFridgeList(itemId, listId.id)
       })
       .then((fridgeItems) => {
         dispatch(receiveFridgeItems(fridgeItems))

@@ -31,7 +31,7 @@ router.post('/new', async (req, res) => {
   }
 })
 router.post('/:listId', async (req, res) => {
-  await db.addItemToFridgeList(Number(req.params.listId), req.body.itemId)
+  await db.addNewToFridgeList(Number(req.params.listId), req.body.itemId, 1234)
   res.json({ message: 'Mischief managed' })
 })
 
@@ -45,15 +45,13 @@ router.delete('/:listId', async (req, res) => {
 })
 
 router.delete('/:listId/:itemId', async (req, res) => {
-  const response = await db.removeFromFridgeList(
+  await db.removeFromFridgeList(
     Number(req.params.listId),
     Number(req.params.itemId)
   )
-  if (response >= 1) {
-    res.json({ message: `${response} item removed from list` })
-  } else {
-    res.json({ message: `Item not found on list` })
-  }
+  const response = await db.getFridgeList(Number(req.params.listId))
+  console.log('route', response)
+  res.json(response)
 })
 
 export default router

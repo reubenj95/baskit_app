@@ -29,7 +29,8 @@ router.post('/', async (req, res) => {
         created_by: authLayer,
       },
     ])
-    res.send('Added item with id ' + response + ' to the database')
+    console.log('route', response)
+    res.json(response)
   } catch (err) {
     console.log(err)
   }

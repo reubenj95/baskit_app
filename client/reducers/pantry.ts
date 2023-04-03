@@ -3,6 +3,7 @@ import {
   REQUEST_PANTRY_ITEMS,
   RECEIVE_PANTRY_ITEMS,
   FAILURE_PANTRY_ITEMS,
+  SEND_PANTRY_ITEMS,
 } from '../actions/pantryList'
 import { FridgeItem, PantryItem } from '../../models/pantryItems'
 
@@ -29,6 +30,12 @@ function pantryList(
         error: null,
         data: action.payload,
         isLoading: false,
+      }
+    case SEND_PANTRY_ITEMS:
+      return {
+        error: null,
+        data: [],
+        isLoading: true,
       }
     case REQUEST_PANTRY_ITEMS:
       return {

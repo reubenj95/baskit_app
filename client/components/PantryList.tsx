@@ -1,4 +1,4 @@
-import { Drawer } from '@mantine/core'
+import { Drawer, Title } from '@mantine/core'
 import { useDisclosure } from '@mantine/hooks'
 import { useEffect } from 'react'
 import { fetchPantryList } from '../actions/pantryList'
@@ -25,6 +25,8 @@ export default function PantryList() {
 
   return (
     <>
+      <Title order={2}>Your Pantry</Title>
+
       <div className="container" id="fridge-item-container">
         {data &&
           data.map((item) => {

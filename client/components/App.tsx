@@ -21,7 +21,7 @@ import FridgeList from './FridgeList'
 import { useDisclosure } from '@mantine/hooks'
 
 function App() {
-  const [opened, setOpened] = useDisclosure(false)
+  const [opened, setOpened] = useState(false)
   return (
     <MantineProvider withGlobalStyles withNormalizeCSS>
       <AppShell

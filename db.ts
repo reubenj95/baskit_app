@@ -7,8 +7,13 @@ type PantryItemUpdate = Partial<PantryItem>
 
 // ~~~ Pantry Items DB Funcs ~~~ //
 
-export function addItemsToPantry(item: PantryItemNoId[], db = connection) {
-  return db('pantry_items').insert(item)
+export async function addItemsToPantry(
+  item: PantryItemNoId[],
+  db = connection
+) {
+  const response = await db('pantry_items').insert(item)
+  console.log('DB', response)
+  return response
 }
 
 export function getPantryItems(userId: number, db = connection) {
@@ -40,14 +45,16 @@ export function createFridgeList(userId: number, db = connection) {
   })
 }
 
-export function addItemToFridgeList(
+export function addNewToFridgeList(
   listId: number,
   itemId: number,
+  userId: number,
   db = connection
 ) {
   return db('fridge_lists_pantry_items').insert({
     list_id: listId,
     item_id: itemId,
+    added_by: userId,
   })
 }
 export async function getLatestFridgeList(db = connection) {

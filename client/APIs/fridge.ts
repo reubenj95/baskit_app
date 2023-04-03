@@ -19,3 +19,8 @@ export async function addItemToFridgeList(listId: number, itemId: number) {
   const response = await request.get(rootUrl + '/fridge')
   return response.body
 }
+
+export async function removeFromFridgeList(itemId: number, listId: number) {
+  const response = await request.delete(`/api/v1/fridge/${listId}/${itemId}`)
+  return response.body
+}

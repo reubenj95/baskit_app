@@ -13,3 +13,11 @@ export interface PantryItem {
 export type PantryItemNoId = Omit<PantryItem, 'id'>
 
 export type FridgeItem = Partial<PantryItem>
+
+export interface Category {
+  id: number
+  name: string
+  icon?: string
+  colour?: string
+  created_by: number
+}

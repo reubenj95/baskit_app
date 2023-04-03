@@ -1,11 +1,9 @@
 import {
   Autocomplete,
-  AutocompleteItem,
   Button,
   Center,
   Divider,
   Flex,
-  Group,
   Space,
   Title,
 } from '@mantine/core'
@@ -14,8 +12,9 @@ import { useEffect, useState } from 'react'
 import { addToFridgeList, fetchFridgeList } from '../actions/fridgeList'
 import { useAppDispatch, useAppSelector } from '../hooks'
 import { Sliders } from './FridgeSliders'
-import { PantryItem } from '../../models/pantryItems'
-import { fetchPantryList } from '../actions/pantryList'
+import { fetchPantryList, createPantryItem } from '../actions/pantryList'
+import { parseFridgeInput } from '../helpers/componentHelpers'
+import { addToFridgeListCombined } from '../actions/addToFridge'
 
 export default function FridgeList() {
   //const [newFruit, setNewFruit] = useState({ name: '' } as FruitCreate)
@@ -37,33 +36,14 @@ export default function FridgeList() {
     updateOptions()
   }, [pantryState.data])
 
-  //Dispatch action to add item to fridge list
-  //If item doesn't exist in pantry, Add item to pantry
-  //Update Pantry state with response (all pantry items from DB)
-  //Add item to fridge list
-  //Add item to options exclusions
-  //Re render fridge list
-
   function handleAddItem(evt: React.FormEvent<HTMLFormElement>) {
     evt.preventDefault()
-    if (pantryState.data) {
-      const names = pantryState.data.map((item) => item.name)
-      const newItem = names.find((name) => name === input)
-      if (newItem) {
-        const existingItem = pantryState.data.filter(
-          (item) => item.name === newItem
-        )
-        console.log(existingItem[0])
-        dispatch(addToFridgeList(existingItem[0]))
-      } else {
-        console.log('Could not find that in the pantry, so I will add it now')
-        // dispatch(addToPantry())
-        //   .then((itemId) => {
-        //     addItemToFridgeList()
-        //   })
-        //   .catch((err) => console.error(err))
-      }
-    }
+    dispatch(addToFridgeListCombined(input))
+    clearInput()
+  }
+
+  function clearInput() {
+    setInput('')
   }
 
   function updateOptions() {
