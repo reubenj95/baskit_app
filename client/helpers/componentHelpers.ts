@@ -1,20 +1,23 @@
-import { Category, PantryItemNoId } from '../../models/pantryItems'
+import { Category, PantryItem, PantryItemNoId } from '../../models/pantryItems'
 
 function parseFridgeInput(input: string): PantryItemNoId {
   const inputArray = input.split(',')
   const name =
     inputArray[0].charAt(0).toUpperCase() +
     inputArray[0].substring(1).toLowerCase()
-  const quantity = isNaN(Number(inputArray[1])) ? 1 : Number(inputArray[1])
+  const targetQuantity = isNaN(Number(inputArray[1]))
+    ? 1
+    : Number(inputArray[1])
   const bestBefore = Date.now() + 604800000
   const parsedObject = {
-    quantity,
+    quantity: 0,
     name,
-    category: null,
+    category: 0,
     brand: null,
     best_before: bestBefore,
     is_fav: false,
     created_by: 1234,
+    target_quantity: targetQuantity,
   }
 
   return parsedObject
@@ -24,12 +27,19 @@ function filterCategories(
   categoryId: number,
   categories: Category[]
 ): Category {
-  const filtered = categories.find((item) => item.id === categoryId)
-  console.log(filtered)
+  let filtered
+  if (categories) {
+    filtered = categories.find((item) => item.id === categoryId)
+  }
   return filtered
+}
+
+function filterItemsByCategory(items: PantryItem[], category: Category) {
+  return items.filter((item) => item.category === category.id)
 }
 
 export default {
   parseFridgeInput,
   filterCategories,
+  filterItemsByCategory,
 }

@@ -1,7 +1,7 @@
 import { Grid, Text } from '@mantine/core'
 import { PantryItem } from '../../models/pantryItems'
 import { deleteFromFridgeList } from '../actions/fridgeList'
-import { useAppDispatch, useAppSelector } from '../hooks'
+import { useAppDispatch } from '../hooks'
 
 interface Props {
   listItem: PantryItem
@@ -40,7 +40,7 @@ export default function FridgeSliders(props: Props) {
           <Grid>
             <Grid.Col span={2}>
               <Text>
-                <span className="fridge-qty">{listItem.quantity}</span>
+                <span className="fridge-qty">{listItem.targetQuantity}</span>
               </Text>
             </Grid.Col>
             <Grid.Col span={6}>{listItem.name}</Grid.Col>

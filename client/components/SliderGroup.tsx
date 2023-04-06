@@ -34,6 +34,8 @@ export function SliderGroup(props: SliderGroupProps) {
         })}
       </div>
     )
+  } else {
+    return <p>Couldn&apos;t find what you&apos;re looking for</p>
   }
   // } else if (props.parent === 'none') {
   //   return (

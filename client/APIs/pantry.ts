@@ -1,5 +1,9 @@
 import request from 'superagent'
-import { FridgeItem, PantryItem } from '../../models/pantryItems'
+import {
+  FridgeItem,
+  PantryItem,
+  PantryItemNoId,
+} from '../../models/pantryItems'
 
 async function fetchPantryItems(): Promise<PantryItem[]> {
   const response = await request.get('/api/v1/pantry')
@@ -8,6 +12,13 @@ async function fetchPantryItems(): Promise<PantryItem[]> {
 
 async function fetchOnePantryItem(id: number) {
   const response = await request.get(`/api/v1/pantry/${id}`)
+  return response.body
+}
+
+async function updatePantryItem(itemUpdates: Partial<PantryItemNoId>) {
+  const response = await request
+    .patch(`/api/v1/pantry/${itemUpdates.id}`)
+    .send(itemUpdates)
   return response.body
 }
 
@@ -28,5 +39,6 @@ export default {
   addToPantry,
   fetchOnePantryItem,
   fetchPantryItems,
+  updatePantryItem,
   deletePantryItem,
 }

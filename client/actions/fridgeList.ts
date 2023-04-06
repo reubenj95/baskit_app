@@ -1,7 +1,8 @@
 import type { ThunkAction } from '../store'
 import { PantryItem } from '../../models/pantryItems'
 import helper from '../helpers/componentHelpers'
-import api from '../APIs/fridge'
+import apiF from '../APIs/fridge'
+import apiP from '../APIs/pantry'
 import pantryAction from '../actions/pantryList'
 
 export const REQUEST_FRIDGE_ITEMS = 'REQUEST_FRIDGE_ITEMS'
@@ -38,7 +39,7 @@ export function failureFridgeItems(errorMessage: string): FridgeItemAction {
 export function fetchFridgeList(): ThunkAction {
   return (dispatch) => {
     dispatch(requestFridgeItems())
-    return api
+    return apiF
       .fetchFridgeItems()
       .then((fridgeItems) => {
         dispatch(receiveFridgeItems(fridgeItems))
@@ -56,7 +57,8 @@ export function fetchFridgeList(): ThunkAction {
 export function addItemToFridgeList(input: string): ThunkAction {
   return async (dispatch, getState) => {
     const { pantryList } = getState()
-    const listId = await api.fetchLatestFridgeList()
+    const listId = await apiF.fetchLatestFridgeList()
+    const parsedInput = helper.parseFridgeInput(input)
     if (pantryList.data) {
       const names = pantryList.data.map((item) => item.name)
       const selectedItem = names.find((name) => name === input)
@@ -64,15 +66,20 @@ export function addItemToFridgeList(input: string): ThunkAction {
         const existingItem = pantryList.data.filter(
           (item) => item.name === selectedItem
         )
-        const response = await api.addItemToFridgeList(
+
+        await apiP.updatePantryItem({
+          id: existingItem[0].id,
+          target_quantity: parsedInput.target_quantity,
+        })
+
+        const response = await apiF.addItemToFridgeList(
           listId.id,
           existingItem[0].id
         )
-        await dispatch(receiveFridgeItems(response))
+        dispatch(receiveFridgeItems(response))
       } else {
-        const newItem = helper.parseFridgeInput(input)
-        const itemId = await dispatch(pantryAction.addToPantry(newItem))
-        const response = await api.addItemToFridgeList(
+        const itemId = await dispatch(pantryAction.addToPantry(parsedInput))
+        const response = await apiF.addItemToFridgeList(
           listId.id,
           Number(itemId[0])
         )
@@ -84,10 +91,10 @@ export function addItemToFridgeList(input: string): ThunkAction {
 
 export function deleteFromFridgeList(itemId: number): ThunkAction {
   return (dispatch) => {
-    return api
+    return apiF
       .fetchLatestFridgeList()
       .then((listId) => {
-        return api.removeFromFridgeList(itemId, listId.id)
+        return apiF.removeFromFridgeList(itemId, listId.id)
       })
       .then((fridgeItems) => {
         dispatch(receiveFridgeItems(fridgeItems))

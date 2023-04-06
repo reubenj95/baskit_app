@@ -36,16 +36,21 @@ export default function PantryList() {
         <Title order={2}>Your Pantry</Title>
 
         <div className="container" id="fridge-item-container">
-          {categoryState.data.map((item) => {
-            return (
-              <SliderGroup
-                key={item.id}
-                parent="pantry"
-                group={item}
-                opened={() => open()}
-                data={pantryState.data}
-              />
-            )
+          {categoryState.data.map((category) => {
+            const filteredPantryItems = pantryState.data
+              ? helper.filterItemsByCategory(pantryState.data, category)
+              : undefined
+            if (filteredPantryItems && filteredPantryItems.length > 0) {
+              return (
+                <SliderGroup
+                  key={category.id}
+                  parent="pantry"
+                  group={category}
+                  opened={() => open()}
+                  data={filteredPantryItems}
+                />
+              )
+            }
           })}
 
           <Drawer

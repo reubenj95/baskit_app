@@ -7,6 +7,13 @@ exports.seed = async function (knex) {
   await knex('categories').del()
   await knex('categories').insert([
     {
+      id: 0,
+      name: 'No category',
+      icon: '',
+      colour: '#fff',
+      created_by: 1234,
+    },
+    {
       id: 1,
       name: 'Produce',
       icon: 'fa-solid fa-carrot',

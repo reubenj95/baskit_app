@@ -14,8 +14,16 @@ router.get('/', async (_req, res) => {
 
 router.post('/', async (req, res) => {
   try {
-    const { quantity, name, category, brand, image, best_before, is_fav } =
-      req.body
+    const {
+      quantity,
+      name,
+      category,
+      brand,
+      image,
+      best_before,
+      is_fav,
+      target_quantity,
+    } = req.body
     const authLayer = 1234
     const response = await db.addItemsToPantry([
       {
@@ -27,6 +35,7 @@ router.post('/', async (req, res) => {
         best_before,
         is_fav,
         created_by: authLayer,
+        target_quantity,
       },
     ])
     console.log('route', response)
@@ -47,7 +56,6 @@ router.get('/:id', async (req, res) => {
 
 router.patch('/:id', async (req, res) => {
   try {
-    console.log(req.body)
     await db.updatePantryItem(Number(req.params.id), req.body)
     res.send('Item updated')
   } catch (err) {

@@ -18,6 +18,7 @@ exports.seed = async function (knex) {
       best_before: oneWeek,
       is_fav: false,
       created_by: 1234,
+      target_quantity: 2,
     },
     {
       id: 2,
@@ -29,6 +30,7 @@ exports.seed = async function (knex) {
       best_before: oneWeek,
       is_fav: false,
       created_by: 1234,
+      target_quantity: 2,
     },
 
     {

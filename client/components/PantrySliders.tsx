@@ -43,22 +43,14 @@ export default function Sliders(props: Props) {
         </div>
         <div className="swipe-element">
           <Grid>
-            <Grid.Col span={2}>
+            <Grid.Col span={2}></Grid.Col>
+            <Grid.Col span={6}>
+              <Title order={4}>{props.listItem.name}</Title>
+            </Grid.Col>
+            <Grid.Col span={4}>
               <Text>
                 <span className="fridge-qty">{props.listItem.quantity}</span>
               </Text>
-            </Grid.Col>
-            <Grid.Col span={6}>{props.listItem.name}</Grid.Col>
-            <Grid.Col span={4}>
-              <div className="flex">
-                $
-                <input
-                  type="number"
-                  id="price"
-                  name="price"
-                  placeholder="0.00"
-                />
-              </div>
             </Grid.Col>
           </Grid>
         </div>

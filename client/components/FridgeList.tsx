@@ -74,12 +74,15 @@ export default function FridgeList() {
             <Flex direction="column" justify="center">
               <Autocomplete
                 placeholder="..."
+                id="fridge-item"
+                name="fridge-item"
+                aria-label="enter item"
                 value={input}
                 onChange={setInput}
                 data={options}
               />
               <Space h="sm" />
-              <Button variant="outline" type="submit">
+              <Button variant="outline" type="submit" alt-text="submit">
                 Add item
               </Button>
             </Flex>

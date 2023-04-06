@@ -30,12 +30,13 @@ function App() {
           <Header height={60} p="xs">
             <Grid>
               <Grid.Col span={3}>
-                <MediaQuery largerThan="sm" styles={{ display: 'none' }}>
+                <MediaQuery largerThan="md" styles={{ display: 'none' }}>
                   <Burger
                     opened={opened}
                     onClick={() => setOpened((o) => !o)}
                     size="sm"
                     mr="xl"
+                    alt-text="menu"
                   />
                 </MediaQuery>
               </Grid.Col>
