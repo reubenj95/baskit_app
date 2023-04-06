@@ -1,14 +1,19 @@
 import knex from 'knex'
 import config from './knexfile'
 const connection = knex(config.development)
-import { PantryItem, PantryItemNoId } from './models/interface'
+import { PantryItem, PantryItemNoId } from './models/pantryItems'
 
 type PantryItemUpdate = Partial<PantryItem>
 
 // ~~~ Pantry Items DB Funcs ~~~ //
 
-export function addItemsToPantry(item: PantryItemNoId[], db = connection) {
-  return db('pantry_items').insert(item)
+export async function addItemsToPantry(
+  item: PantryItemNoId[],
+  db = connection
+) {
+  const response = await db('pantry_items').insert(item)
+  console.log('DB', response)
+  return response
 }
 
 export function getPantryItems(userId: number, db = connection) {
@@ -40,14 +45,16 @@ export function createFridgeList(userId: number, db = connection) {
   })
 }
 
-export function addItemToFridgeList(
+export function addNewToFridgeList(
   listId: number,
   itemId: number,
+  userId: number,
   db = connection
 ) {
   return db('fridge_lists_pantry_items').insert({
     list_id: listId,
     item_id: itemId,
+    added_by: userId,
   })
 }
 export async function getLatestFridgeList(db = connection) {
@@ -71,7 +78,7 @@ export async function getFridgeList(
       'fridge_lists_pantry_items.item_id',
       'pantry_items.id'
     )
-    .select('id as item_id', 'quantity', 'name', 'category')
+    .select('id', 'target_quantity as targetQuantity', 'name', 'category')
     .where('list_id', listId)
 
   return result
@@ -82,5 +89,17 @@ export function removeFromFridgeList(
   itemId: number,
   db = connection
 ) {
-  return db('fridge_lists').where({ list_id: listId, item_id: itemId }).del()
+  return db('fridge_lists_pantry_items')
+    .where({ list_id: listId, item_id: itemId })
+    .del()
+}
+
+export function deleteFridgeList(id: number, db = connection) {
+  return db('fridge_lists').where('id', id).del()
+}
+
+//~~~ Categories Functions ~~~~\\
+
+export function getCategories(db = connection) {
+  return db('categories').select()
 }

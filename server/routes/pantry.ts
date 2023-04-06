@@ -14,8 +14,16 @@ router.get('/', async (_req, res) => {
 
 router.post('/', async (req, res) => {
   try {
-    const { quantity, name, category, brand, image, best_before, is_fav } =
-      req.body
+    const {
+      quantity,
+      name,
+      category,
+      brand,
+      image,
+      best_before,
+      is_fav,
+      target_quantity,
+    } = req.body
     const authLayer = 1234
     const response = await db.addItemsToPantry([
       {
@@ -27,9 +35,11 @@ router.post('/', async (req, res) => {
         best_before,
         is_fav,
         created_by: authLayer,
+        target_quantity,
       },
     ])
-    res.send('Added item with id ' + response + ' to the database')
+    console.log('route', response)
+    res.json(response)
   } catch (err) {
     console.log(err)
   }
@@ -46,12 +56,16 @@ router.get('/:id', async (req, res) => {
 
 router.patch('/:id', async (req, res) => {
   try {
-    console.log(req.body)
     await db.updatePantryItem(Number(req.params.id), req.body)
     res.send('Item updated')
   } catch (err) {
     console.log(err)
   }
+})
+
+router.delete('/:id', async (req, res) => {
+  const data = await db.deletePantryItem(Number(req.params.id))
+  res.json(data)
 })
 
 export default router
